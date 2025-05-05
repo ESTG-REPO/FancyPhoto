@@ -304,7 +304,7 @@
   <!-- Include Fancybox JS -->
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
 
-  <script>
+<script>
     document.addEventListener('DOMContentLoaded', function () {
       const gallery = document.getElementById('gallery');
       if (!gallery) return;
@@ -314,109 +314,60 @@
       const cdnBase = 'https://frgcdn-dia1-sd.xperia.pt';
       const cdnHD = 'https://frgcdn-dia1-hd.xperia.pt';
 
-      const loadedImages = new Set();
-
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const index = parseInt(entry.target.dataset.index);
-            if (!loadedImages.has(index)) {
-              loadImage(index);
-              loadedImages.add(index);
-            }
-            obs.unobserve(entry.target);
-          }
-        });
-      }, {
-        rootMargin: '200px',
-        threshold: 0.01
-      });
-
-      function createPlaceholder(i) {
-        const placeholder = document.createElement('div');
-        placeholder.className = 'gallery-placeholder';
-        placeholder.dataset.index = i;
-        placeholder.style.height = '200px'; // adjust for consistent spacing
-        gallery.appendChild(placeholder);
-        observer.observe(placeholder);
-      }
-
-      function loadImage(i) {
+      for (let i = 1; i <= imageCount; i++) {
         const num = i.toString().padStart(4, '0');
         const filename = `IMG_${num}_sd.JPG`;
-        const hdFilename = `IMG_${num}_hd.JPG`;
-
         const thumbUrl = `${cdnBase}/${filename}`;
         const fullUrl = thumbUrl;
-        const hdUrl = `${cdnHD}/${hdFilename}`;
+        const hdUrl = `${cdnHD}/IMG_${num}_hd.JPG`;
 
-        const img = new Image();
-        img.loading = 'lazy';
-        img.src = thumbUrl;
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+
+        const link = document.createElement('a');
+        link.href = fullUrl;
+        link.setAttribute('data-fancybox', 'gallery');
+        link.setAttribute('data-caption', `IMG_${num} - Dia ${day}`);
+
+        const img = document.createElement('img');
+        img.dataset.src = thumbUrl; // This makes it lazy-loaded
         img.alt = `IMG ${num}`;
+        img.loading = 'lazy'; // This tells the browser to lazy-load
+        img.className = 'lazy'; // Add a class for custom styles, if needed
+        link.appendChild(img);
 
-        img.onload = async () => {
-          if (img.decode) {
-            try { await img.decode(); } catch {}
-          }
+        const button = document.createElement('button');
+        button.className = 'gallery-download-btn';
+        button.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5V13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10.4a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V10.4a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 
+                     0 0 0-1 0v7.793L5.354 6.646a.5.5 0 1 0-.708.708l3.5 3.5z"/>
+          </svg>
+        `;
 
-          const item = document.createElement('div');
-          item.className = 'gallery-item';
+        button.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
 
-          const link = document.createElement('a');
-          link.href = fullUrl;
-          link.setAttribute('data-fancybox', 'gallery');
-          link.setAttribute('data-caption', `IMG_${num} - Dia ${day}`);
-          link.appendChild(img);
+          fetch(hdUrl)
+            .then(response => {
+              if (!response.ok) throw new Error('Erro ao buscar imagem HD');
+              return response.blob();
+            })
+            .then(blob => saveAs(blob, `IMG_${num}_hd.JPG`))
+            .catch(err => {
+              console.error('Erro ao descarregar:', err);
+              alert('Erro ao descarregar a imagem HD.');
+            });
+        });
 
-          const button = document.createElement('button');
-          button.className = 'gallery-download-btn';
-          button.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M.5 9.9a.5.5 0 0 1 .5.5V13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10.4a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V10.4a.5.5 0 0 1 .5-.5z"/>
-              <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 
-                       0 0 0-1 0v7.793L5.354 6.646a.5.5 0 1 0-.708.708l3.5 3.5z"/>
-            </svg>
-          `;
-
-          button.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            fetch(hdUrl)
-              .then(response => {
-                if (!response.ok) throw new Error('Erro ao buscar imagem HD');
-                return response.blob();
-              })
-              .then(blob => saveAs(blob, hdFilename))
-              .catch(err => {
-                console.error('Erro ao descarregar:', err);
-                alert('Erro ao descarregar a imagem HD.');
-              });
-          });
-
-          item.appendChild(link);
-          item.appendChild(button);
-
-          const placeholder = gallery.querySelector(`.gallery-placeholder[data-index="${i}"]`);
-          if (placeholder) {
-            gallery.replaceChild(item, placeholder);
-          } else {
-            gallery.appendChild(item);
-          }
-        };
-
-        img.onerror = () => {
-          console.warn(`Imagem não encontrada: ${thumbUrl}`);
-          const placeholder = gallery.querySelector(`.gallery-placeholder[data-index="${i}"]`);
-          if (placeholder) placeholder.remove();
-        };
+        item.appendChild(link);
+        item.appendChild(button);
+        gallery.appendChild(item);
       }
 
-      for (let i = 1; i <= imageCount; i++) {
-        createPlaceholder(i);
-      }
-
+      // Initialize Fancybox
       if (window.Fancybox) {
         Fancybox.bind('[data-fancybox="gallery"]', {
           loop: true,
@@ -441,9 +392,9 @@
           }
         });
       }
+
     });
   </script>
-
 <script>
   const blocker = document.getElementById('iframe-blocker');
 
