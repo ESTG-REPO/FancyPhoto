@@ -618,60 +618,88 @@
     const cdnBase = 'https://frgcdn-dia1-sd.xperia.pt';
     const cdnHD = 'https://frgcdn-dia1-hd.xperia.pt'; // <-- Set your correct HD domain here
 
+    // IntersectionObserver for lazy loading images
+    const lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;  // Set the real image source when it's in view
+          img.classList.remove('lazy'); // Optionally remove lazy class for style changes
+          observer.unobserve(img); // Stop observing after the image is loaded
+        }
+      });
+    }, { threshold: 0.1 }); // Trigger when 10% of the image is visible
+
     for (let i = 1; i <= imageCount; i++) {
       const paddedNumber = i.toString().padStart(4, '0');
       const filename = `IMG_${paddedNumber}_sd.JPG`;
 
       const thumbUrl = `${cdnBase}/${filename}`;
-      const fullUrl = `${cdnBase}/${filename}`;
+      const fullUrl = thumbUrl;
       const hdFilename = `IMG_${paddedNumber}_hd.JPG`; // Assuming HD images follow this format
       const hdUrl = `${cdnHD}/${hdFilename}`;
 
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
+      // Check if the image exists before adding it to the gallery
+      fetch(thumbUrl, { method: 'HEAD' })
+        .then(response => {
+          if (response.ok) {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
 
-      const link = document.createElement('a');
-      link.href = fullUrl;
-      link.setAttribute('data-fancybox', 'gallery');
-      link.setAttribute('data-caption', `IMG_${paddedNumber} - Dia ${day}`);
+            const link = document.createElement('a');
+            link.href = fullUrl;
+            link.setAttribute('data-fancybox', 'gallery');
+            link.setAttribute('data-caption', `IMG_${paddedNumber} - Dia ${day}`);
 
-      const img = document.createElement('img');
-      img.src = thumbUrl;
-      img.alt = `IMG ${paddedNumber}`;
-      img.loading = 'lazy';
-      link.appendChild(img);
+            const img = document.createElement('img');
+            img.dataset.src = thumbUrl; // Use lazy load
+            img.alt = `IMG ${paddedNumber}`;
+            img.classList.add('lazy'); // Add lazy class for styling
+            img.loading = 'lazy'; // Native lazy loading
 
-      const button = document.createElement('button');
-      button.className = 'gallery-download-btn';
-      button.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5V13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10.4a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V10.4a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 
-                   0 0 0-1 0v7.793L5.354 6.646a.5.5 0 1 0-.708.708l3.5 3.5z"/>
-        </svg> 
-      `;
+            // Start observing the image for lazy loading
+            lazyLoadObserver.observe(img);
 
-      button.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+            link.appendChild(img);
 
-        fetch(hdUrl)
-          .then(response => {
-            if (!response.ok) throw new Error('Erro ao buscar imagem HD');
-            return response.blob();
-          })
-          .then(blob => saveAs(blob, hdFilename))
-          .catch(err => {
-            console.error('Erro ao descarregar:', err);
-            alert('Erro ao descarregar a imagem HD.');
-          });
-      });
+            const button = document.createElement('button');
+            button.className = 'gallery-download-btn';
+            button.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M.5 9.9a.5.5 0 0 1 .5.5V13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10.4a.5.5 0 0 1 1 0V13a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V10.4a.5.5 0 0 1 .5-.5z"/>
+                <path d="M7.646 10.854a.5.5 0 0 0 .708 0l3.5-3.5a.5.5 0 0 0-.708-.708L8.5 9.293V1.5a.5.5 
+                         0 0 0-1 0v7.793L5.354 6.646a.5.5 0 1 0-.708.708l3.5 3.5z"/>
+              </svg> 
+            `;
 
-      item.appendChild(link);
-      item.appendChild(button);
-      gallery.appendChild(item);
+            button.addEventListener('click', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              fetch(hdUrl)
+                .then(response => {
+                  if (!response.ok) throw new Error('Erro ao buscar imagem HD');
+                  return response.blob();
+                })
+                .then(blob => saveAs(blob, hdFilename))
+                .catch(err => {
+                  console.error('Erro ao descarregar:', err);
+                  alert('Erro ao descarregar a imagem HD.');
+                });
+            });
+
+            item.appendChild(link);
+            item.appendChild(button);
+            gallery.appendChild(item);
+          }
+        })
+        .catch(err => {
+          console.error('Erro ao verificar imagem:', err);
+          // Ignore image if not found, do nothing
+        });
     }
 
+    // Initialize Fancybox
     if (window.Fancybox) {
       Fancybox.bind('[data-fancybox="gallery"]', {
         loop: true,
