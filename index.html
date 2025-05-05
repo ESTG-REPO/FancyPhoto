@@ -311,7 +311,7 @@
     const imageCount = 190;
 
     for (let i = 1; i <= imageCount; i++) {
-      const file = `Festa-${i}.jpg`;
+      const file = `img-${i}.jpg`;
       const cdnBase = 'https://frgcdn-dia1-sd.xperia.pt';
       const cdnHD = 'https://.xperia.pt';
 
@@ -329,7 +329,7 @@
 
       const img = document.createElement('img');
       img.src = thumbUrl;
-      img.alt = `Festa ${i}`;
+      img.alt = `img ${i}`;
       img.loading = 'lazy';
       link.appendChild(img);
 
