@@ -1,7 +1,7 @@
 <div align="center">
 
-# Projeto Voluntário  
-**Website para as tradicionais festas da Páscoa de Santa Eufémia.**
+# Galeria de Fotos  
+
 
 ---
 
