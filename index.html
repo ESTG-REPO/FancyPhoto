@@ -8,7 +8,7 @@
 
 <!-- Open Graph / Facebook / Messenger -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://fotos.psvita.pt/">
+<meta property="og:url" content="https://fotos.diogo-cardoso.com/">
 <meta property="og:title" content=" Fotos Sabado Dia 2 Tradicionais Festas da Pascoa Santa Eufemia 2025">
 <meta property="og:description" content="Fotos Sabado Dia 2 Tradicionais Festas da Pascoa Santa Eufemia 2025">
 <meta property="og:image" content="/assets/images/favicon.png">
@@ -18,7 +18,7 @@
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:url" content="https://fotos.psvita.pt/">
+<meta name="twitter:url" content="https://fotos.diogo-cardoso.com/">
 <meta name="twitter:title" content="Santa Eufémia Easter Festival 2025">
 <meta name="twitter:description" content="galeria de fotos">
 <meta name="twitter:image" content="/assets/images/favicon.png">
@@ -165,7 +165,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true">
-          <li class="nav-item"><a class="nav-link text-primary display-4" href="page2.html#gallery01-b"><span class="mbrib-camera mbr-iconfont mbr-iconfont-btn"></span>Dia 1</a></li>
+          <li class="nav-item"><a class="nav-link text-primary display-4" href="index.html"><span class="mbrib-camera mbr-iconfont mbr-iconfont-btn"></span>Dia 1</a></li>
           <li class="nav-item"><a class="nav-link text-primary display-4" href="page3.html#gallery01-1g"><span class="mbrib-camera mbr-iconfont mbr-iconfont-btn"></span>Dia 2</a></li>
           <li class="nav-item"><a class="nav-link text-primary display-4" href="page4.html#gallery01-2k"><span class="mbrib-camera mbr-iconfont mbr-iconfont-btn"></span>Dia 3</a></li>
 <li class="nav-item">
@@ -308,11 +308,11 @@
     if (!gallery) return;
 
     const day = 1;
-    const imageCount = 125;
+    const imageCount = 190;
 
     for (let i = 1; i <= imageCount; i++) {
       const file = `Festa-${i}.jpg`;
-      const cdnBase = 'https://.xperia.pt';
+      const cdnBase = 'https://frgcdn-dia1-sd.xperia.pt';
       const cdnHD = 'https://.xperia.pt';
 
       const thumbUrl = `${cdnBase}/${file}`;
@@ -325,7 +325,7 @@
       const link = document.createElement('a');
       link.href = fullUrl;
       link.setAttribute('data-fancybox', 'gallery');
-      link.setAttribute('data-caption', `Festa ${i} - Dia ${day}`);
+      link.setAttribute('data-caption', `img ${i} - Dia ${day}`);
 
       const img = document.createElement('img');
       img.src = thumbUrl;
