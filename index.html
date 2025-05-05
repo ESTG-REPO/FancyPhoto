@@ -615,15 +615,17 @@
 
     const day = 1;
     const imageCount = 190;
+    const cdnBase = 'https://frgcdn-dia1-sd.xperia.pt';
+    const cdnHD = 'https://frgcdn-dia1-hd.xperia.pt'; // <-- Set your correct HD domain here
 
     for (let i = 1; i <= imageCount; i++) {
-      const file = `img-${i}.jpg`;
-      const cdnBase = 'https://frgcdn-dia1-sd.xperia.pt';
-      const cdnHD = 'https://.xperia.pt';
+      const paddedNumber = i.toString().padStart(4, '0');
+      const filename = `IMG_${paddedNumber}_sd.JPG`;
 
-      const thumbUrl = `${cdnBase}/${file}`;
-      const fullUrl = `${cdnBase}/${file}`; // used for viewing in Fancybox
-      const hdUrl = `${cdnHD}/${file}`;     // used for downloading
+      const thumbUrl = `${cdnBase}/${filename}`;
+      const fullUrl = `${cdnBase}/${filename}`;
+      const hdFilename = `IMG_${paddedNumber}_hd.JPG`; // Assuming HD images follow this format
+      const hdUrl = `${cdnHD}/${hdFilename}`;
 
       const item = document.createElement('div');
       item.className = 'gallery-item';
@@ -631,11 +633,11 @@
       const link = document.createElement('a');
       link.href = fullUrl;
       link.setAttribute('data-fancybox', 'gallery');
-      link.setAttribute('data-caption', `img ${i} - Dia ${day}`);
+      link.setAttribute('data-caption', `IMG_${paddedNumber} - Dia ${day}`);
 
       const img = document.createElement('img');
       img.src = thumbUrl;
-      img.alt = `img ${i}`;
+      img.alt = `IMG ${paddedNumber}`;
       img.loading = 'lazy';
       link.appendChild(img);
 
@@ -655,13 +657,13 @@
 
         fetch(hdUrl)
           .then(response => {
-            if (!response.ok) throw new Error('Erro ao buscar imagem');
+            if (!response.ok) throw new Error('Erro ao buscar imagem HD');
             return response.blob();
           })
-          .then(blob => saveAs(blob, file))
+          .then(blob => saveAs(blob, hdFilename))
           .catch(err => {
             console.error('Erro ao descarregar:', err);
-            alert('Erro ao descarregar a imagem.');
+            alert('Erro ao descarregar a imagem HD.');
           });
       });
 
@@ -696,6 +698,7 @@
     }
   });
 </script>
+
 
 <script>
   const blocker = document.getElementById('iframe-blocker');
