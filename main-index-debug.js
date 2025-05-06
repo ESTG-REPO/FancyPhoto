@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     Fancybox.bind('[data-fancybox="gallery"]', {
       loop: true,
       animated: true,
-      preload: 2,
+      preload: 5,
       hideScrollbar: true,
       trapFocus: true,
       Image: {
