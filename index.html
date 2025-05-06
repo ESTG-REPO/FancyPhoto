@@ -235,16 +235,19 @@
       const item = document.createElement('div');
       item.className = 'gallery-item';
 
-      const link = document.createElement('a');
-      link.href = fullUrl;
-      link.setAttribute('data-fancybox', 'gallery');
-      link.setAttribute('data-caption', `Festa ${i} - Dia ${day}`);
+	const paddedNumber = i.toString().padStart(2, '0');
+	
+	const link = document.createElement('a');
+	link.href = fullUrl;
+	link.setAttribute('data-fancybox', 'gallery');
+	link.setAttribute('data-caption', `Festa ${paddedNumber} - Dia ${day}`);
+	
+	const img = document.createElement('img');
+	img.src = thumbUrl;
+	img.alt = `Festa ${paddedNumber}`;
+	img.loading = 'lazy';
+	link.appendChild(img);
 
-      const img = document.createElement('img');
-      img.src = thumbUrl;
-      img.alt = `Festa ${i}`;
-      img.loading = 'lazy';
-      link.appendChild(img);
 
       const button = document.createElement('button');
       button.className = 'gallery-download-btn';
