@@ -266,42 +266,10 @@
                 if (!response.ok) throw new Error('Erro ao buscar imagem');
                 return response.blob();
               })
-              .then(blob => saveAs(blob, filename))
+		.then(blob => saveAs(blob, filename))
 		.catch(err => {
 		  console.error('Erro ao descarregar:', err);
-		
-		  // Create custom modal with a clickable link
-		  const modal = document.createElement('div');
-		  modal.style.position = 'fixed';
-		  modal.style.top = '0';
-		  modal.style.left = '0';
-		  modal.style.width = '100%';
-		  modal.style.height = '100%';
-		  modal.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-		  modal.style.display = 'flex';
-		  modal.style.justifyContent = 'center';
-		  modal.style.alignItems = 'center';
-		  modal.style.zIndex = '9999';
-		  
-		  const modalContent = document.createElement('div');
-		  modalContent.style.backgroundColor = 'white';
-		  modalContent.style.padding = '20px';
-		  modalContent.style.borderRadius = '5px';
-		  modalContent.style.textAlign = 'center';
-		  modalContent.innerHTML = `
-		    <p>Para imagens originais, visita este <a href="https://photos.app.goo.gl/NR6beH5GeFBNfbkW6" target="_blank" style="color: blue; text-decoration: underline;">link</a>.</p>
-		    <button style="margin-top: 10px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Fechar</button>
-		  `;
-		
-		  // Add event listener to close the modal
-		  const closeButton = modalContent.querySelector('button');
-		  closeButton.addEventListener('click', () => {
-		    document.body.removeChild(modal);
-		  });
-		
-		  // Append modal to body
-		  modal.appendChild(modalContent);
-		  document.body.appendChild(modal);
+		  alert('Para imagens originais, visita este link: https://photos.app.goo.gl/NR6beH5GeFBNfbkW6');
 		});
 
           });
