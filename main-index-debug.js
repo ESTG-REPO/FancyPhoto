@@ -1,4 +1,4 @@
-<script>
+
   document.addEventListener('DOMContentLoaded', async function () {
     const gallery = document.getElementById('gallery');
     if (!gallery) return;
@@ -113,4 +113,3 @@
       });
     }
   });
-</script>
