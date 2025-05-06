@@ -234,8 +234,10 @@
 
       const item = document.createElement('div');
       item.className = 'gallery-item';
-
-	const paddedNumber = i.toString().padStart(2, '0');
+	    
+	const paddedNumber = i.toString().padStart(4, '0');
+	const filename = `Festa-${paddedNumber}.jpg`;
+	const fullUrl = `https://frgcdn-dia2-sd.xperia.pt/${filename}`;
 	
 	const link = document.createElement('a');
 	link.href = fullUrl;
@@ -243,7 +245,7 @@
 	link.setAttribute('data-caption', `Festa ${paddedNumber} - Dia ${day}`);
 	
 	const img = document.createElement('img');
-	img.src = thumbUrl;
+	img.src = fullUrl;
 	img.alt = `Festa ${paddedNumber}`;
 	img.loading = 'lazy';
 	link.appendChild(img);
