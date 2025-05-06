@@ -279,8 +279,10 @@
           item.appendChild(button);
           gallery.appendChild(item);
         })
-        .catch(err => {
-          console.warn(`Erro ao verificar ${filename}:`, err);
+	.catch(err => {
+	  if (err.name !== 'TypeError') {
+	    console.warn(`Erro ao verificar ${filename}:`, err);
+	  }
         });
     }
 
