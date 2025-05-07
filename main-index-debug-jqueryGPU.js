@@ -85,7 +85,7 @@ $(document).ready(async function () {
       showClass: "fancybox-fadeIn",
       hideClass: "fancybox-fadeOut",
       dragToClose: true,
-      preload: 3,  // Preload 5 images
+      preload: 7,  // 
       hideScrollbar: true,
       trapFocus: true,
 
