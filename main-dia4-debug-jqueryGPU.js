@@ -3,10 +3,10 @@ $(document).ready(async function () {
   const $gallery = $('#gallery');
   if (!$gallery.length) return;
 
-  const day = 2;
+  const day = 4;
   const imageCount = 190;
-  const cdnBase = 'https://frgcdn-dia2-sd.diogo-cardoso.com';
-  const cdnHD = 'https://frgcdn-dia2-sd.xperia.pt'; // if hd version available insert hd cdn
+  const cdnBase = 'https://frgcdn-dia4-sd.diogo-cardoso.com';
+  const cdnHD = 'https://frgcdn-dia4-sd.xperia.pt'; // if hd version available insert hd cdn
 
   const checkImageAvailable = async (url) => {
     try {
