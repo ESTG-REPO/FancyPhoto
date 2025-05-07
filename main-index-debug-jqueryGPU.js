@@ -1,11 +1,12 @@
-$(document).ready(async function () {
+// Fancybox Gallery handler with Hardware acceleration, panzoom features,  made by cardoso
+$(document).ready(async function () { 
   const $gallery = $('#gallery');
   if (!$gallery.length) return;
 
   const day = 2;
-  const imageCount = 190;
+  const imageCount = 174;
   const cdnBase = 'https://frgcdn-dia2-sd.diogo-cardoso.com';
-  const cdnHD = 'https://frgcdn-dia2-sd.xperia.pt'; // Unified HD download CDN
+  const cdnHD = 'https://frgcdn-dia2-sd.xperia.pt'; // if hd version available insert hd cdn
 
   const checkImageAvailable = async (url) => {
     try {
@@ -51,7 +52,7 @@ $(document).ready(async function () {
         </svg> 
       </button>`
     );
-
+// downloader 1.0 multi select will implement later
     $button.on('click', async function (e) {
       e.preventDefault();
       e.stopPropagation();
@@ -97,9 +98,21 @@ $(document).ready(async function () {
         autoStart: false
       },
 
-      Panzoom: {
-        decelFriction: 0.9,  // Smooth zooming when dragging
-        maxScale: 2,  // Maximum zoom scale
+          Panzoom: {
+            // Smooth zooming
+            decelFriction: 0.9,
+            maxScale: 3,  // Max zoom scale
+            minScale: 0.5,  // Min zoom scale
+
+            // Drag to pan settings
+            panOnlyWhenZoomed: true,  // Only allow dragging when zoomed in
+            bounds: true,  // Restrict image movement within the container
+            contain: true,  // Prevent panning beyond the image's bounds
+
+            // Mouse wheel and pinch gestures
+            zoomSpeed: 0.1,  // Speed of zoom
+            maxZoom: 3,  // Maximum zoom
+            minZoom: 0.5,  // Minimum zoom
       },
       
       Toolbar: {
