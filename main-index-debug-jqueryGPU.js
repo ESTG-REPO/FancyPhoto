@@ -78,7 +78,6 @@ $(document).ready(async function () {
 
   await Promise.allSettled(loadImageTasks);
 
-<script>
 if (window.Fancybox) {
   Fancybox.bind('[data-fancybox="gallery"]', {
     loop: true,
@@ -158,5 +157,5 @@ if (window.Fancybox) {
     }
   });
 }
-</script>
+
 
