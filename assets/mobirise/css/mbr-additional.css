@@ -1276,7 +1276,7 @@ a {
   .cid-tHeG7yune1 .navbar-brand {
     margin-right: auto;
   }
-  .cid-tHeG7yune1 .navbar-collapse {
+.cid-tHeG7yune1 .navbar-collapse {
     z-index: -1 !important;
     position: absolute;
     top: 110%;
@@ -1284,11 +1284,18 @@ a {
     width: 100%;
     padding: 1rem;
     border-radius: 1.5rem;
-    background: #ff6400;
-    opacity: 1;
-    border-color: #ff6400 !important;
-    background: #ff6400 !important;
+
+    /* Fully transparent background */
+    background: rgba(255, 255, 255, 0.05) !important;
+
+    /* Optional: remove or customize border */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+
+    /* Enable blur effect */
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
+
+    opacity: 1;
   }
   .cid-tHeG7yune1 .navbar-nav .nav-item .nav-link::after {
     margin-left: 10px;
