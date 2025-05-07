@@ -78,54 +78,85 @@ $(document).ready(async function () {
 
   await Promise.allSettled(loadImageTasks);
 
-  if (window.Fancybox) {
-    Fancybox.bind('[data-fancybox="gallery"]', {
-      loop: true,
-      animated: true,
-      showClass: "fancybox-fadeIn",
-      hideClass: "fancybox-fadeOut",
-      dragToClose: true,
-      preload: 7,  // 
-      hideScrollbar: true,
-      trapFocus: true,
+<script>
+if (window.Fancybox) {
+  Fancybox.bind('[data-fancybox="gallery"]', {
+    loop: true,
+    animated: true,
+    showClass: "fancybox-fadeIn",
+    hideClass: "fancybox-fadeOut",
+    dragToClose: true,
+    preload: 7,
+    hideScrollbar: true,
+    trapFocus: true,
 
-      images: {
-        zoom: true,
-        wheel: "zoom",
-        click: "toggleZoom"
-      },
-      Thumbs: {
-        autoStart: false
-      },
+    images: {
+      zoom: true,
+      wheel: "zoom",
+      click: "toggleZoom"
+    },
 
-          Panzoom: {
-            // Smooth zooming
-            decelFriction: 0.9,
-            maxScale: 3,  // Max zoom scale
-            minScale: 0.5,  // Min zoom scale
+    Thumbs: {
+      autoStart: false
+    },
 
-            // Drag to pan settings
-            panOnlyWhenZoomed: true,  // Only allow dragging when zoomed in
-            bounds: true,  // Restrict image movement within the container
-            contain: true,  // Prevent panning beyond the image's bounds
+    Panzoom: {
+      decelFriction: 0.9,
+      maxScale: 3,
+      minScale: 0.5,
+      panOnlyWhenZoomed: true,
+      bounds: true,
+      contain: true,
+      zoomSpeed: 0.1,
+      maxZoom: 3,
+      minZoom: 0.5
+    },
 
-            // Mouse wheel and pinch gestures
-            zoomSpeed: 0.1,  // Speed of zoom
-            maxZoom: 3,  // Maximum zoom
-            minZoom: 0.5,  // Minimum zoom
-      },
-      
-      Toolbar: {
-        display: [
-          "counter",
-          "zoom",
-          "slideshow",
-          "fullscreen",
-          "download",
-          "thumbs",
-          "close"
-        ]
-      },
-    });
-  }
-});
+    Toolbar: {
+      display: [
+        "counter",
+        "zoom",
+        "slideshow",
+        "fullscreen",
+        "download",
+        "thumbs",
+        "close",
+        "share" 
+      ]
+    },
+
+    buttons: {
+      share: {
+        type: "button",
+        class: "fancybox-button--share",
+        label: "Share",
+        html: `<svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7a2.48 2.48 0 0 0 0-.87l7.02-4.11a2.5 2.5 0 1 0-.91-1.41L8 10.5a2.5 2.5 0 1 0 0 3l7.11 4.16a2.5 2.5 0 1 0 .89-1.44z"/></svg>`,
+        click: (fancybox, slide) => {
+          const url = slide.src || slide.$el?.href;
+          if (!url) return;
+
+          const encoded = encodeURIComponent(url);
+          const options = [
+            { name: "WhatsApp", link: `https://wa.me/?text=${encoded}` },
+            { name: "Facebook", link: `https://www.facebook.com/sharer/sharer.php?u=${encoded}` },
+            { name: "Twitter", link: `https://twitter.com/intent/tweet?url=${encoded}` }
+          ];
+
+          let html = `<div style="text-align:left;padding:1rem">`;
+          options.forEach(opt => {
+            html += `<p><a href="${opt.link}" target="_blank">${opt.name}</a></p>`;
+          });
+          html += `</div>`;
+
+          Fancybox.show([{ src: html, type: "html" }], {
+            dragToClose: false,
+            mainClass: "fancybox-share-popup",
+            autoFocus: false
+          });
+        }
+      }
+    }
+  });
+}
+</script>
+
