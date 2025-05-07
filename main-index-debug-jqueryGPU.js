@@ -15,7 +15,7 @@ $(document).ready(async function () {
     } catch (err) {
       if (err instanceof TypeError) {
         try {
-          const fallbackRes = await fetch(url, { method: 'HEAD', mode: 'cors' });
+          const fallbackRes = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
           if (fallbackRes.type === 'opaque') return true;
         } catch (fallbackErr) {
           console.warn('Fallback failed:', fallbackErr);
