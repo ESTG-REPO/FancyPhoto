@@ -917,19 +917,21 @@ a {
   position: relative;
   padding: 0.5rem 0.6rem;
   flex-wrap: nowrap;
-  background: #ff6400 !important;
+
+  /* Transparent background with blur */
+  background: rgba(255, 255, 255, 0.05) !important;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px); /* Safari support */
+
   left: 0;
   right: 0;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: flex-end;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
   border-radius: 100vw;
   margin-top: 1rem;
-  background-color: #ff6400;
+
+  /* Optional subtle shadow to enhance visibility */
   box-shadow: 0 30px 60px 0 rgba(27, 31, 10, 0.08);
 }
 @media (max-width: 992px) {
