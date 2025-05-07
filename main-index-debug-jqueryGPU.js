@@ -15,7 +15,7 @@ $(document).ready(async function () {
     } catch (err) {
       if (err instanceof TypeError) {
         try {
-          const fallbackRes = await fetch(url, { method: 'HEAD', mode: 'no-cors' });
+          const fallbackRes = await fetch(url, { method: 'HEAD', mode: 'cors' });
           if (fallbackRes.type === 'opaque') return true;
         } catch (fallbackErr) {
           console.warn('Fallback failed:', fallbackErr);
@@ -38,7 +38,7 @@ $(document).ready(async function () {
     if (!exists) return;
 
     const $link = $(`
-      <a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia ${day}" aria-label="Abrir imagem Festa ${paddedNumber}">
+      <a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia ${day}<br><a href="https://wa.me/?text=${encodedUrl}" target="_blank">WhatsApp</a>'" aria-label="Abrir imagem Festa ${paddedNumber}">
         <img src="${imageUrl}" alt="Festa ${paddedNumber}" loading="lazy" style="opacity:0;transition:opacity 0.4s ease-in-out;will-change:opacity;">
       </a>
     `);
