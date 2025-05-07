@@ -84,6 +84,10 @@ $(document).ready(async function () {
       showClass: "fancybox-fadeIn",
       hideClass: "fancybox-fadeOut",
       dragToClose: true,
+      preload: 5,  // Preload 5 images
+      hideScrollbar: true,
+      trapFocus: true,
+
       images: {
         zoom: true,
         wheel: "zoom",
@@ -92,6 +96,12 @@ $(document).ready(async function () {
       Thumbs: {
         autoStart: false
       },
+
+      Panzoom: {
+        decelFriction: 0.9,  // Smooth zooming when dragging
+        maxScale: 2,  // Maximum zoom scale
+      },
+      
       Toolbar: {
         display: [
           "counter",
