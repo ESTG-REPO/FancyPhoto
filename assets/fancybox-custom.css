@@ -53,3 +53,23 @@
     .gallery-download-btn:hover {
       background-color: #0056b3;
     }
+  .fancybox-button--share svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .fancybox-share-popup .fancybox__content {
+    max-width: 300px;
+    border-radius: 10px;
+    font-family: sans-serif;
+  }
+
+  .fancybox-share-popup a {
+    text-decoration: none;
+    color: #0b7dda;
+  }
+
+  .fancybox-share-popup a:hover {
+    text-decoration: underline;
+  }
