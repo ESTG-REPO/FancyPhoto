@@ -38,7 +38,7 @@ $(document).ready(async function () {
     if (!exists) return;
 
     const $link = $(`
-      <a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia ${day}<br><a href="https://wa.me/?text=${encodedUrl}" target="_blank">WhatsApp</a>'" aria-label="Abrir imagem Festa ${paddedNumber}">
+      <a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia ${day}" aria-label="Abrir imagem Festa ${paddedNumber}">
         <img src="${imageUrl}" alt="Festa ${paddedNumber}" loading="lazy" style="opacity:0;transition:opacity 0.4s ease-in-out;will-change:opacity;">
       </a>
     `);
@@ -78,7 +78,7 @@ $(document).ready(async function () {
 
   await Promise.allSettled(loadImageTasks);
 
- if (window.Fancybox) {
+  if (window.Fancybox) {
     Fancybox.bind('[data-fancybox="gallery"]', {
       loop: true,
       animated: true,
@@ -101,18 +101,18 @@ $(document).ready(async function () {
           Panzoom: {
             // Smooth zooming
             decelFriction: 0.9,
-            maxScale: 3,  
-            minScale: 0.5,  
+            maxScale: 3,  // Max zoom scale
+            minScale: 0.5,  // Min zoom scale
 
             // Drag to pan settings
-            panOnlyWhenZoomed: true,  
-            bounds: true,  
-            contain: true,  
+            panOnlyWhenZoomed: true,  // Only allow dragging when zoomed in
+            bounds: true,  // Restrict image movement within the container
+            contain: true,  // Prevent panning beyond the image's bounds
 
             // Mouse wheel and pinch gestures
-            zoomSpeed: 0.1,  
-            maxZoom: 3,  
-            minZoom: 0.5,  
+            zoomSpeed: 0.1,  // Speed of zoom
+            maxZoom: 3,  // Maximum zoom
+            minZoom: 0.5,  // Minimum zoom
       },
       
       Toolbar: {
@@ -124,7 +124,6 @@ $(document).ready(async function () {
           "download",
           "thumbs",
           "close"
-          "share"
         ]
       },
     });
