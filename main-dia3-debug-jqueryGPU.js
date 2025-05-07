@@ -38,7 +38,7 @@ $(document).ready(async function () {
     if (!exists) return;
 
     const $link = $(`
-      <a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia 4" aria-label="Abrir imagem Festa ${paddedNumber}">
+      <a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia 3" aria-label="Abrir imagem Festa ${paddedNumber}">
         <img src="${imageUrl}" alt="Festa ${paddedNumber}" loading="lazy" style="opacity:0;transition:opacity 0.4s ease-in-out;will-change:opacity;" crossorigin="anonymous">
       </a>
     `);
