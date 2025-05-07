@@ -4,7 +4,7 @@ $(document).ready(async function () {
   if (!$gallery.length) return;
 
   const day = 2;
-  const imageCount = 174;
+  const imageCount = 190;
   const cdnBase = 'https://frgcdn-dia2-sd.diogo-cardoso.com';
   const cdnHD = 'https://frgcdn-dia2-sd.xperia.pt'; // if hd version available insert hd cdn
 
