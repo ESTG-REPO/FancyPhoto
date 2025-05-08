@@ -5,13 +5,13 @@
 
 ---
 
-## Powered By and others...:
+## Powered By ...:
 
 <table align="center">
   <tr>
     <td align="center" valign="middle">
       <img src="https://readme-cdn.xperia.pt/Captura%20de%20ecr%C3%A3%202025-05-08%20172236.png" /><br/>
-      <sub><strong>Bootstrap</strong></sub>
+      <sub><strong>Technologies</strong></sub>
     </td>
   
   </tr>
