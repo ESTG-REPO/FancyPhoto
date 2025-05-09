@@ -111,7 +111,7 @@ $(document).ready(async function () {
         click: "toggleZoom"
       },
       Thumbs: {
-        autoStart: true,
+        autoStart: false,
         type: "modern"
       },
       Panzoom: {
