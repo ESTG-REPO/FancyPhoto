@@ -5,7 +5,7 @@ $(document).ready(async function () {
 
   const startIndex = 168;
   const imageCount = 61;
-  const cdnBase = 'https://frgcdn-dia3-sd.diogo-cardoso.com';
+  const cdnBase = 'https://frgcdn-dia3-sd.xperia.pt';
   const cdnHD = 'https://frgcdn-dia3-sd.xperia.pt';
 
   const checkImageAvailable = async (url) => {
