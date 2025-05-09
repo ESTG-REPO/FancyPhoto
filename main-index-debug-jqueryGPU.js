@@ -5,7 +5,7 @@ $(document).ready(async function () {
 
   const day = 2;
   const imageCount = 190;
-  const cdnBase = 'https://frgcdn-dia2-sd.diogo-cardoso.com';
+  const cdnBase = 'https://frgcdn-dia2-sd.xperia.pt';
   const cdnHD = 'https://frgcdn-dia2-sd.xperia.pt'; // if hd version available insert hd cdn
 
   const checkImageAvailable = async (url) => {
