@@ -76,7 +76,7 @@ $(document).ready(async function () {
         saveAs(blob, filename);
       } catch (err) {
         console.error('Erro ao descarregar:', err);
-        alert('Para fazer download, visita: https://photos.app.goo.gl/NR6beH5GeFBNfbkW6');
+        alert('Erro! Tente mais tarde');
       }
     });
 
