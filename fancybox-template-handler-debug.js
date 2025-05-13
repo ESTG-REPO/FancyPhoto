@@ -3,9 +3,9 @@ $(document).ready(async function () {
   if (!$gallery.length) return;
 
   const day = 1;
-  const imageCount = 114;
-  const cdnBase = 'https://jpcdn-sd.xperia.pt';
-  const cdnHD = 'https://jpcdn-sd.xperia.pt';
+  const imageCount = 100;
+  const cdnBase = 'https://xxx-xxx.xperia.pt';
+  const cdnHD = 'https://xxx-xxx.xperia.pt';
 
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
   const preloadCount = isMobile ? 4 : 10;
