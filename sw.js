@@ -51,7 +51,7 @@ self.addEventListener('fetch', event => {
         }
 
         try {
-          const response = await fetch(request, { mode: 'cors' });
+          const response = await fetch(request, { mode: 'no-cors' });
 
           if (response.ok || response.type === 'opaque') {
             cache.put(request, response.clone());
@@ -91,7 +91,7 @@ self.addEventListener('fetch', event => {
 // === Helper: Background update for image cache ===
 async function updateImageCache(cache, request) {
   try {
-    const response = await fetch(request, { mode: 'cors' });
+    const response = await fetch(request, { mode: 'no-cors' });
     if (response.ok || response.type === 'opaque') {
       await cache.put(request, response.clone());
       limitCacheEntries(cache, MAX_IMAGE_ENTRIES);
