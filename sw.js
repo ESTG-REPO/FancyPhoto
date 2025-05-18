@@ -1,8 +1,8 @@
-// Service Worker: v7-smart-gallery
-const VERSION = 'v7-smart-gallery';
+// Service Worker: v8-smart-gallery-helper
+const VERSION = 'v8-smart-gallery';
 const STATIC_CACHE = `static-${VERSION}`;
 const IMAGE_CACHE = `images-${VERSION}`;
-const MAX_IMAGE_ENTRIES = 250;
+const MAX_IMAGE_ENTRIES = 300;
 
 // Basic 1x1 transparent PNG fallback
 const blankPixel = new Uint8Array(atob("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQImWNgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=")
@@ -52,7 +52,7 @@ self.addEventListener("fetch", event => {
   event.respondWith(
     fetch(request)
       .then(res => {
-        if (res.ok) {
+        if (res.ok && res.status === 200) {
           const cloned = res.clone();
           caches.open(STATIC_CACHE).then(cache => cache.put(request, cloned));
         }
@@ -72,9 +72,9 @@ async function smartImageHandler(request) {
   }
 
   const response = await fetchWithCorsFallback(request);
-  if (response) {
+  if (response && response.ok && response.status === 200) {
     const cloned = response.clone();
-    cache.put(request, cloned);
+    await cache.put(request, cloned);
     await limitCacheSize(cache, MAX_IMAGE_ENTRIES);
     preloadNearbyImages(request.url);
     return response;
@@ -111,7 +111,7 @@ async function fetchWithCorsFallback(request) {
 
 async function refreshImageInBackground(cache, request) {
   const fresh = await fetchWithCorsFallback(request);
-  if (fresh) {
+  if (fresh && fresh.ok && fresh.status === 200) {
     const cloned = fresh.clone();
     await cache.put(request, cloned);
     await limitCacheSize(cache, MAX_IMAGE_ENTRIES);
@@ -148,7 +148,7 @@ async function preloadNearbyImages(currentUrl) {
     const alreadyCached = await cache.match(url);
     if (!alreadyCached) {
       const res = await fetchWithCorsFallback(new Request(url));
-      if (res) {
+      if (res && res.ok && res.status === 200) {
         const cloned = res.clone();
         await cache.put(url, cloned);
       }
