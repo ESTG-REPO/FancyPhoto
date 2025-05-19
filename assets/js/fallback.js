@@ -1,4 +1,4 @@
-// fallback.js
+// fallback.js broken will not fix
 
 const fallbackSrc = 'assets/images/favicon.png';
 
