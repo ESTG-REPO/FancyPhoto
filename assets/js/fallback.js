@@ -2,35 +2,66 @@
 
 const fallbackSrc = 'assets/images/favicon.png';
 
-async function checkImageExists(img) {
-  const src = img.src;
-
-  // Prevent loop if the image is already the fallback
-  if (src.endsWith(fallbackSrc)) return;
-
+async function checkImageExists(url) {
   try {
-    const response = await fetch(src, { method: 'HEAD' });
-
-    if (!response.ok && response.status === 404) {
-      img.src = fallbackSrc;
-    }
+    const res = await fetch(url, { method: 'HEAD' });
+    return res.ok;
   } catch (err) {
-    // Network error fallback
-    img.src = fallbackSrc;
+    return false;
   }
 }
 
-function monitorImages() {
-  document.querySelectorAll('img').forEach(img => {
-    // Skip images already checked or using fallback
-    if (img.dataset.checked) return;
+async function preloadAndFixFancyboxImages() {
+  if (!window.Fancybox) return;
 
-    img.dataset.checked = 'true';
-    checkImageExists(img);
-  });
+  const items = document.querySelectorAll('[data-fancybox]');
+
+  await Promise.allSettled(
+    [...items].map(async (el) => {
+      const originalSrc = el.getAttribute('href') || el.getAttribute('data-src');
+
+      // Already using fallback
+      if (!originalSrc || originalSrc.includes(fallbackSrc)) return;
+
+      const exists = await checkImageExists(originalSrc);
+      if (!exists) {
+        el.setAttribute('href', fallbackSrc);
+        el.setAttribute('data-src', fallbackSrc);
+
+        const img = el.querySelector('img');
+        if (img) {
+          img.src = fallbackSrc;
+        }
+      }
+    })
+  );
 }
 
-document.addEventListener('DOMContentLoaded', monitorImages);
+// Also fix images shown in the document normally
+async function fixBrokenPageImages() {
+  const images = document.querySelectorAll('img:not([data-checked])');
 
-// Optional: Monitor dynamically added images every 2 seconds
-setInterval(monitorImages, 2000);
+  await Promise.allSettled(
+    [...images].map(async (img) => {
+      img.dataset.checked = 'true';
+
+      if (img.src.includes(fallbackSrc)) return;
+
+      const exists = await checkImageExists(img.src);
+      if (!exists) {
+        img.src = fallbackSrc;
+      }
+    })
+  );
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await fixBrokenPageImages();
+  await preloadAndFixFancyboxImages();
+});
+
+// Optional: re-check every few seconds for dynamically loaded content
+setInterval(() => {
+  fixBrokenPageImages();
+  preloadAndFixFancyboxImages();
+}, 2000);
