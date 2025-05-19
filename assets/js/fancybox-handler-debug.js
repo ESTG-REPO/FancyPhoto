@@ -129,9 +129,7 @@ $(document).ready(async function () {
         display: [
           "counter",
           "zoom",
-          "slideshow",
-          "fullscreen",
-          "download",
+          "slideshow",       
           "thumbs",
           "close"
         ]
