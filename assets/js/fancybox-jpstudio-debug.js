@@ -44,7 +44,7 @@ $(document).ready(async function () {
   const loadImageTasks = Array.from({ length: imageCount }, async (_, idx) => {
     const i = idx + 1;
     const paddedNumber = i.toString().padStart(4, '0');
-    const filename = `IMG_${paddedNumber}.jpg`;
+    const filename = `IMG_${paddedNumber}.JPG`;
     const imageUrl = `${cdnBase}/${filename}`;
     const hdUrl = `${cdnHD}/${filename}`;
 
