@@ -44,7 +44,7 @@ $(document).ready(async function () {
   const loadImageTasks = Array.from({ length: imageCount }, async (_, idx) => {
     const i = idx + 1;
     const paddedNumber = i.toString().padStart(4, '0');
-    const filename = `Festa-${paddedNumber}.jpg`;
+    const filename = `IMG_${paddedNumber}.jpg`;
     const imageUrl = `${cdnBase}/${filename}`;
     const hdUrl = `${cdnHD}/${filename}`;
 
@@ -52,8 +52,8 @@ $(document).ready(async function () {
     if (!exists) return;
 
     const $link = $(
-      `<a href="${imageUrl}" data-fancybox="gallery" data-caption="Festa ${paddedNumber} - Dia ${day}" aria-label="Abrir imagem Festa ${paddedNumber}" data-thumb="${imageUrl}">
-        <img data-src="${imageUrl}" alt="Festa ${paddedNumber}" loading="lazy" style="opacity:0;transition:opacity 0.4s ease-in-out;will-change:opacity;backface-visibility:hidden;transform:translateZ(0);" crossorigin="anonymous">
+      `<a href="${imageUrl}" data-fancybox="gallery" data-caption="IMG ${paddedNumber} - Dia ${day}" aria-label="Abrir imagem IMG ${paddedNumber}" data-thumb="${imageUrl}">
+        <img data-src="${imageUrl}" alt="IMG ${paddedNumber}" loading="lazy" style="opacity:0;transition:opacity 0.4s ease-in-out;will-change:opacity;backface-visibility:hidden;transform:translateZ(0);" crossorigin="anonymous">
       </a>`
     );
 
