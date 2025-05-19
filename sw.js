@@ -42,7 +42,7 @@ self.addEventListener("fetch", event => {
   if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-  const isImage = request.destination === 'image' || /\.(jpg|jpeg|png|webp|gif|svg|avif)$/i.test(url.pathname);
+  const isImage = request.destination === 'image' || /\.(jpg|jpeg|png|webp|gif|svg|avif|JPG)$/i.test(url.pathname);
 
   if (isImage) {
     event.respondWith(smartImageHandler(request));
@@ -127,19 +127,20 @@ async function limitCacheSize(cache, max) {
 
 async function preloadNearbyImages(currentUrl) {
   const currentFile = currentUrl.split('/').pop();
-  const match = currentFile.match(/IMG_(\d+)\.jpg/i);
+  const match = currentFile.match(/IMG_(\d+)\.(jpg|JPG)/i);
   if (!match) return;
 
   const currentIdx = parseInt(match[1], 10);
+  const extension = match[2]; // preserve the original extension (jpg or JPG)
   const preloadRange = [currentIdx - 2, currentIdx + 2];
 
-  const baseUrl = currentUrl.replace(/IMG_\d+\.jpg/i, '');
+  const baseUrl = currentUrl.replace(/IMG_\d+\.(jpg|JPG)/i, '');
   const preloadUrls = [];
 
   for (let i = preloadRange[0]; i <= preloadRange[1]; i++) {
     if (i === currentIdx || i < 1) continue;
     const padded = i.toString().padStart(4, '0');
-    preloadUrls.push(`${baseUrl}IMG_${padded}.jpg`);
+    preloadUrls.push(`${baseUrl}IMG_${padded}.${extension}`);
   }
 
   const cache = await caches.open(IMAGE_CACHE);
