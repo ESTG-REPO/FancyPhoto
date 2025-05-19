@@ -93,7 +93,7 @@ $(document).ready(async function () {
         click: "toggleZoom"
       },
       Thumbs: {
-        autoStart: false
+        autoStart: true
       },
       Panzoom: {
         decelFriction: 0.9,
