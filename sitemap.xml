@@ -3,9 +3,6 @@
 		<loc>https://fotos.diogo-cardoso.com/index.html</loc>
 	</url>
 	<url>
-		<loc>https://fotos.diogo-cardoso.com/index.html</loc>
-	</url>
-	<url>
 		<loc>https://fotos.diogo-cardoso.com/dia2.html</loc>
 	</url>
 	<url>
@@ -13,5 +10,8 @@
 	</url>
 	<url>
 		<loc>https://fotos.diogo-cardoso.com/dia4.html</loc>
+	</url>
+        <url>
+		<loc>https://fotos.diogo-cardoso.com/jpstudio.html</loc>
 	</url>
 </urlset>
